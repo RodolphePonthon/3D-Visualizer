@@ -10,16 +10,19 @@
 
 class PointsRenderer {
 private:
-	float* points;
+	float* points = nullptr;
+	float* colors = nullptr;
 	size_t nbPoints;
-	unsigned int VBO;
+	unsigned int VBO[2];
 	unsigned int VAO;
 	Shader* shader;
 
 public:
-	PointsRenderer(std::vector<glm::vec3> points, Shader* shdr);
+	PointsRenderer(std::vector<glm::vec3> pts, std::vector<glm::vec3> clrs, Shader* shdr) throw(std::string);
 	~PointsRenderer(void);
-	void updateData(void);
+	void updatePoints(std::vector<glm::vec3> pts) throw(std::string);
+	void updateColors(std::vector<glm::vec3> clrs) throw(std::string);
+	void updateVAO(void);
 	void draw(void);
 };
 

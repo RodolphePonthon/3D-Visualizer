@@ -33,9 +33,9 @@ int main(int argc, char** argv) {
 	if (argc >= 2) {
 		fileName = argv[1];
 	}
-	GeometryFileReader* file;
+	GeometryFileReader* fileData;
 	try {
-		file = new GeometryFileReader(fileName);
+		fileData = new GeometryFileReader(fileName);
 	}
 	catch (std::string & e) {
 		std::cout << "Exception : " << e << std::endl;
@@ -49,7 +49,22 @@ int main(int argc, char** argv) {
 	Shader* shader = new Shader("Shaders/pointsRendererShaders.vs", "Shaders/pointsRendererShaders.fs");
 	glm::mat4 model = glm::mat4(1.0f);
 
-	PointsRenderer* pointsRenderer = new PointsRenderer(file->getPoints(), shader);
+	PointsRenderer* pointsRenderer;
+	try {
+		pointsRenderer = new PointsRenderer(fileData->getPoints(), std::vector<glm::vec3>(), shader);
+	}
+	catch (std::string & e) {
+		std::cout << "Exception : " << e << std::endl;
+		delete camera;
+		camera = NULL;
+		delete window;
+		window = NULL;
+		delete fileData;
+		fileData = NULL;
+		delete shader;
+		shader = NULL;
+		return -1;
+	}
 
 	GLCall(glClearColor(0.15f, 0.15f, 0.15f, 1.0f));
 	GLCall(glEnable(GL_PROGRAM_POINT_SIZE));
@@ -75,5 +90,7 @@ int main(int argc, char** argv) {
 	camera = NULL;
 	delete pointsRenderer;
 	pointsRenderer = NULL;
+	delete fileData;
+	fileData = NULL;
 	return 0;
 }

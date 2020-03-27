@@ -40,7 +40,7 @@ PointsRenderer::~PointsRenderer(void) {
 
 void PointsRenderer::updatePoints(std::vector<glm::vec3> pts) throw(std::string) {
 	if (pts.empty())
-		throw std::string("The size of points list is empty !");
+		throw std::string("The list of points is empty !");
 
 	if (pts.size() != this->nbPoints) {
 		this->nbPoints = pts.size();

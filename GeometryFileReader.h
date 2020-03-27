@@ -10,12 +10,14 @@
 class GeometryFileReader {
 private:
 	std::vector<glm::vec3> points;
+	std::vector<glm::vec3> colors;
 	void readerSelector(std::ifstream* f, std::string l);
 	void readPoints(std::ifstream* f, std::string l);
 
 public:
 	GeometryFileReader(std::string f) throw(std::string);
 	std::vector<glm::vec3> getPoints(void) const;
+	std::vector<glm::vec3> getColors(void) const;
 };
 
 #endif

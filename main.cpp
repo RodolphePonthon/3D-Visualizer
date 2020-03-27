@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
 
 	PointsRenderer* pointsRenderer;
 	try {
-		pointsRenderer = new PointsRenderer(fileData->getPoints(), std::vector<glm::vec3>(), shader);
+		pointsRenderer = new PointsRenderer(fileData->getPoints(), fileData->getColors(), shader);
 	}
 	catch (std::string & e) {
 		std::cout << "Exception : " << e << std::endl;

@@ -20,6 +20,7 @@ private:
 	glm::vec2 lastMousePos = glm::vec2(0.0f, 0.0f);
 	bool mousePosInitialized = false;
 	bool captureMouse = false;
+	bool axisXYZShown = true;
 	void initializeGlad(void) throw(std::string);
 	void initializeWindow(void) throw(std::string);
 
@@ -34,6 +35,8 @@ public:
 	void setLastMousePos(glm::vec2 newPos);
 	bool isMouseCaptured(void) const;
 	void toggleCaptureMouse(void);
+	bool areAxisXYZDisplayed(void) const;
+	void toggleAxisXYZ(void);
 
 	void stop(void);
 	bool shouldStop(void) const;

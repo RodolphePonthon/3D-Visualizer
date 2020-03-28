@@ -51,6 +51,14 @@ void GlfwWindow::toggleCaptureMouse(void) {
 	glfwSetInputMode(this->window, GLFW_CURSOR, this->captureMouse ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 }
 
+bool GlfwWindow::areAxisXYZDisplayed(void) const {
+	return this->axisXYZShown;
+}
+
+void GlfwWindow::toggleAxisXYZ(void) {
+	this->axisXYZShown = !this->axisXYZShown;
+}
+
 void GlfwWindow::initializeGlad(void) throw(std::string) {
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		throw std::string("Failed to initialize GLAD");
@@ -166,5 +174,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
 		windowHandler->toggleCaptureMouse();
 		windowHandler->setMouseInitialized(false);
+	}
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+		windowHandler->toggleAxisXYZ();
 	}
 }

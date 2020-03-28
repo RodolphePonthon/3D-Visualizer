@@ -6,6 +6,7 @@
 #include "GlfwWindow.h"
 #include "Camera.h"
 #include "PointsRenderer.h"
+#include "VectorsRenderer.h"
 #include "Shader.h"
 #include "GLError.h"
 #include "GeometryFileReader.h"
@@ -49,22 +50,21 @@ int main(int argc, char** argv) {
 	Shader* shader = new Shader("Shaders/pointsRendererShaders.vs", "Shaders/pointsRendererShaders.fs");
 	glm::mat4 model = glm::mat4(1.0f);
 
-	PointsRenderer* pointsRenderer;
-	try {
-		pointsRenderer = new PointsRenderer(fileData->getPoints(), fileData->getColors(), shader);
-	}
-	catch (std::string & e) {
-		std::cout << "Exception : " << e << std::endl;
-		delete camera;
-		camera = NULL;
-		delete window;
-		window = NULL;
-		delete fileData;
-		fileData = NULL;
-		delete shader;
-		shader = NULL;
-		return -1;
-	}
+	PointsRenderer* pointsRenderer = new PointsRenderer(fileData->getPoints(), fileData->getColors(), shader);
+
+	std::vector<glm::vec3> axisPoints;
+	std::vector<glm::vec3> axisColors;
+	axisPoints.push_back(glm::vec3(-1000000.0f, 0.0f, 0.0f));
+	axisPoints.push_back(glm::vec3(1000000.0f, 0.0f, 0.0f));
+	axisColors.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
+	axisPoints.push_back(glm::vec3(0.0f, -1000000.0f, 0.0f));
+	axisPoints.push_back(glm::vec3(0.0f, 1000000.0f, 0.0f));
+	axisColors.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+	axisPoints.push_back(glm::vec3(0.0f, 0.0f, -1000000.0f));
+	axisPoints.push_back(glm::vec3(0.0f, 0.0f, 1000000.0f));
+	axisColors.push_back(glm::vec3(0.0f, 0.0f, 1.0f));
+
+	VectorsRenderer* axisXYZ = new VectorsRenderer(axisPoints, axisColors, shader);
 
 	GLCall(glClearColor(0.15f, 0.15f, 0.15f, 1.0f));
 	GLCall(glEnable(GL_PROGRAM_POINT_SIZE));
@@ -77,6 +77,9 @@ int main(int argc, char** argv) {
 		shader->setVec3("cameraPos", camera->getPosition());
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 		pointsRenderer->draw();
+		if (window->areAxisXYZDisplayed()) {
+			axisXYZ->draw();
+		}
 
 		window->swapBuffers();
 		window->lookForEvents();
@@ -90,6 +93,8 @@ int main(int argc, char** argv) {
 	camera = NULL;
 	delete pointsRenderer;
 	pointsRenderer = NULL;
+	delete axisXYZ;
+	axisXYZ = NULL;
 	delete fileData;
 	fileData = NULL;
 	return 0;

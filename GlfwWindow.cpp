@@ -175,7 +175,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		windowHandler->toggleCaptureMouse();
 		windowHandler->setMouseInitialized(false);
 	}
-	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+	if ((key == GLFW_KEY_1 || key == GLFW_KEY_KP_1) && action == GLFW_PRESS) {
 		windowHandler->toggleAxisXYZ();
 	}
 }

@@ -151,6 +151,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 		/*float offsetY = static_cast<float>(ypos) - lastMousePos.y;
 		if (offsetY != 0) {
 			windowHandler->getCamera()->selfRotate(windowHandler->getCamera()->getRotationSensitivity() * -offsetY, windowHandler->getCamera()->getRightVector());
+			std::cout << glm::to_string(windowHandler->getCamera()->getRightVector()) << std::endl;
 		}*/
 		windowHandler->setLastMousePos(glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos)));
 	}

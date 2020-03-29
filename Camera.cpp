@@ -49,7 +49,7 @@ float Camera::getRotationSensitivity(void) const {
 }
 
 void Camera::move(const glm::vec3 m) {
-	this->transformations = glm::translate(this->transformations, m);
+	this->transformations[3] = glm::vec4(this->transformations[3].x + m.x, this->transformations[3].y + m.y, this->transformations[3].z + m.z, 1.0f);
 }
 
 void Camera::selfRotate(const float angle, const glm::vec3 around) {

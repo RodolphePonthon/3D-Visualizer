@@ -2,6 +2,9 @@
 #include <iostream>
 #include <glm/glm/glm.hpp>
 #include <glm/glm/gtx/string_cast.hpp>
+#include <cstdint>
+#include <thread>
+#include <chrono>
 
 #include "GlfwWindow.h"
 #include "Camera.h"
@@ -58,6 +61,10 @@ int main(int argc, char** argv) {
 	GLCall(glClearColor(0.15f, 0.15f, 0.15f, 1.0f));
 	GLCall(glEnable(GL_PROGRAM_POINT_SIZE));
 	GLCall(glEnable(GL_DEPTH_TEST));
+
+	double lastTimeCount = glfwGetTime();
+	unsigned int FPS = 60;
+
 	while (!window->shouldStop()) {
 		window->processEvents();
 		shader->setMat4("view", camera->getViewMatrix());
@@ -72,6 +79,12 @@ int main(int argc, char** argv) {
 
 		window->swapBuffers();
 		window->lookForEvents();
+		double frameTime = glfwGetTime() - lastTimeCount;
+		if (frameTime < 1 / (double)(FPS)) {
+			int timeToSleep = (int)(((1 / (double)(FPS)) - frameTime) * 1000);
+			std::this_thread::sleep_for(std::chrono::milliseconds(timeToSleep));
+		}
+		lastTimeCount = glfwGetTime();
 	}
 
 	delete window;

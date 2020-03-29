@@ -15,7 +15,7 @@ private:
 	float fieldOfView;
 	unsigned int screenWidth, screenHeight;
 	float minimalRenderDistance, maximalRenderDistance;
-	float velocity = 0.01f;
+	float velocity = 0.1f;
 	float rotationSensitivity = 0.1f;
 
 public:

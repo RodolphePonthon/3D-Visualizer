@@ -72,7 +72,7 @@ void Camera::rotate(const float angle, const glm::vec3 around) {
 }
 
 glm::mat4 Camera::getViewMatrix(void) const {
-	return glm::lookAt(getPosition(), getPosition() + getDirection(), getUpVector());
+	return glm::lookAt(getPosition(), getPosition() - getDirection(), getUpVector());
 }
 
 glm::mat4 Camera::getProjectionMatrix(void) const {

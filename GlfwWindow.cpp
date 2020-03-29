@@ -179,4 +179,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if ((key == GLFW_KEY_1 || key == GLFW_KEY_KP_1) && action == GLFW_PRESS) {
 		windowHandler->toggleAxisXYZ();
 	}
+	if ((key == GLFW_KEY_LEFT_CONTROL) && action == GLFW_PRESS) {
+		windowHandler->getCamera()->setVelocity(windowHandler->getCamera()->getVelocity() * 2.0f);
+	}
+	if ((key == GLFW_KEY_LEFT_CONTROL) && action == GLFW_RELEASE) {
+		windowHandler->getCamera()->setVelocity(windowHandler->getCamera()->getVelocity() / 2.0f);
+	}
 }

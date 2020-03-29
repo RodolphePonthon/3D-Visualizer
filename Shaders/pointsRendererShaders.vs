@@ -8,10 +8,11 @@ out vec4 vertexColor;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 cameraPos;//does not seem to work well for now
+uniform vec3 cameraPos;
 
 void main() {
    gl_Position = projection * view * model * vec4(position, 1.0);
-   gl_PointSize = 5.0;
+   float distanceFromCamera = sqrt((cameraPos.x - position.x) * (cameraPos.x - position.x) + (cameraPos.y - position.y) * (cameraPos.y - position.y) + (cameraPos.z - position.z) * (cameraPos.z - position.z));
+   gl_PointSize = max(100 / distanceFromCamera, 3.0f);
    vertexColor = vec4(color, 1.0);
 }

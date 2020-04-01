@@ -108,7 +108,6 @@ void GlfwWindow::lookForEvents(void) {
 	glfwPollEvents();
 }
 
-#include <glm/glm/gtx/string_cast.hpp>
 void GlfwWindow::processEvents(void) {
 	float cameraSpeed = camera->getVelocity();
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -144,15 +143,14 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	}
 	if (windowHandler->isMouseCaptured()) {
 		glm::vec2 lastMousePos = windowHandler->getLastMousePos();
-		float offsetX = static_cast<float>(xpos) - lastMousePos.x;
+		float offsetX = windowHandler->getCamera()->getRotationSensitivity() * (static_cast<float>(xpos) - lastMousePos.x);
 		if (offsetX != 0) {
-			windowHandler->getCamera()->selfRotate(windowHandler->getCamera()->getRotationSensitivity() * -offsetX, glm::vec3(0.0f, 0.0f, 1.0f));
+			windowHandler->getCamera()->selfRotate(-offsetX, glm::vec3(0.0f, 0.0f, 1.0f));
 		}
-		/*float offsetY = static_cast<float>(ypos) - lastMousePos.y;
+		float offsetY = windowHandler->getCamera()->getRotationSensitivity() * (static_cast<float>(ypos) - lastMousePos.y);
 		if (offsetY != 0) {
-			windowHandler->getCamera()->selfRotate(windowHandler->getCamera()->getRotationSensitivity() * -offsetY, windowHandler->getCamera()->getRightVector());
-			std::cout << glm::to_string(windowHandler->getCamera()->getRightVector()) << std::endl;
-		}*/
+			windowHandler->getCamera()->selfRotate(-offsetY, windowHandler->getCamera()->getRightVector());
+		}
 		windowHandler->setLastMousePos(glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos)));
 	}
 }
@@ -169,8 +167,10 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	GlfwWindow* windowHandler = reinterpret_cast<GlfwWindow*> (glfwGetWindowUserPointer(window));
-	if (key == GLFW_KEY_C && action == GLFW_PRESS)
-		std::cout << glm::to_string(windowHandler->getCamera()->getPosition()) << std::endl;
+	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+		std::cout << windowHandler->getCamera()->to_string() << std::endl;
+	}
+		
 
 	if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
 		windowHandler->toggleCaptureMouse();

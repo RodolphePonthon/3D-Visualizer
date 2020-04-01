@@ -2,7 +2,6 @@
 #include <iostream>
 #include <glm/glm/glm.hpp>
 #include <glm/glm/gtx/string_cast.hpp>
-#include <cstdint>
 #include <thread>
 #include <chrono>
 

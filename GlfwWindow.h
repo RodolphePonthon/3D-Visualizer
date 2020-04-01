@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include <glm/glm/glm.hpp>
+#include <glm/glm/gtx/rotate_vector.hpp>
 
 #include "Camera.h"
 

@@ -13,6 +13,6 @@ uniform vec3 cameraPos;
 void main() {
    gl_Position = projection * view * model * vec4(position, 1.0);
    float distanceFromCamera = sqrt((cameraPos.x - position.x) * (cameraPos.x - position.x) + (cameraPos.y - position.y) * (cameraPos.y - position.y) + (cameraPos.z - position.z) * (cameraPos.z - position.z));
-   gl_PointSize = max(100 / distanceFromCamera, 3.0f);
+   gl_PointSize = max(300 / distanceFromCamera, 0.001f);
    vertexColor = vec4(color, 1.0);
 }

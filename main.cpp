@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 	GLCall(glEnable(GL_DEPTH_TEST));
 
 	double lastTimeCount = glfwGetTime();
-	unsigned int FPS = 60;
+	unsigned int FPS = 120;
 
 	while (!window->shouldStop()) {
 		window->processEvents();
